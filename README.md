@@ -30,10 +30,10 @@ Demo
 
 All gifs are in slow motion.
 
-| Activity transitions                          | Circular reveal                               | Path tracing                                  |
-|:---------------------------------------------:|:---------------------------------------------:|:---------------------------------------------:|
-| ![](art/MaterialWitness7.gif)                 | ![](art/MaterialWitness5.gif)                 | ![](art/MaterialWitness6.gif)                 |
-| From [Custom Activity Animations][3]          | From [Android Recipe #2, fun with shaders][4] | From [Android Recipe #4, path tracing][5]     |
+| Activity transitions          | Circular reveal               | Path tracing                  |
+|:-----------------------------:|:-----------------------------:|:-----------------------------:|
+| ![](art/MaterialWitness7.gif) | ![](art/MaterialWitness5.gif) | ![](art/MaterialWitness6.gif) |
+| From [recipe][3]              | From [recipe][4]              | From [recipe][5]              |
 
 
 How to use this source code
