@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BaseAppTheme">
+        <attr name="actionBarIconColor" format="color" />
+    </declare-styleable>
+
+    <style name="BaseAppTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="android:colorBackground">@color/theme_background</item>
+        <item name="actionBarIconColor">#fff</item>
+        <item name="android:windowBackground">@color/theme_background</item>
+    </style>
+
+    <style name="MainTheme" parent="BaseAppTheme">
+        <!--<item name="android:actionBarTheme">@style/MainActionBarThemeOverlay</item>-->
+        <item name="android:actionBarStyle">@style/MainActionBar</item>
+        <item name="actionBarStyle">@style/MainActionBar</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_drawer</item>
+        <item name="homeAsUpIndicator">@drawable/ic_ab_drawer</item>
+        <item name="android:windowActionBarOverlay">false</item>
+        <item name="windowActionBarOverlay">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="MainActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@color/theme_default_primary_dark</item>
+        <item name="background">@color/theme_default_primary_dark</item>
+        <item name="android:displayOptions">showTitle|homeAsUp</item>
+        <item name="displayOptions">showTitle|homeAsUp</item>
+        <item name="android:titleTextStyle">@style/MainThemeActionBarTitleTextStyle</item>
+        <item name="titleTextStyle">@style/MainThemeActionBarTitleTextStyle</item>
+    </style>
+
+    <style name="MainThemeActionBarTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="DetailTheme" parent="MainTheme">
+        <item name="android:actionBarStyle">@style/DetailActionBar</item>
+        <item name="actionBarStyle">@style/DetailActionBar</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_up_white</item>
+        <item name="homeAsUpIndicator">@drawable/ic_ab_up_white</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="DetailActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@null</item>
+        <item name="background">@null</item>
+        <item name="android:displayOptions">homeAsUp</item>
+        <item name="displayOptions">homeAsUp</item>
+    </style>
+</resources>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:io="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.android.io2014.DetailActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/info_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:id="@+id/map_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        map:uiRotateGestures="false"
+                        map:uiScrollGestures="false"
+                        map:uiTiltGestures="false"
+                        map:uiZoomControls="false"
+                        map:uiZoomGestures="false"
+
+                        tools:ignore="MissingPrefix" />
+
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop" />
+
+                <com.example.android.io2014.ui.SpotlightView
+                    android:id="@+id/spotlight"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+
+                    io:mask="@drawable/spot_mask"
+                    io:target="@id/map_container" />
+
+                <com.example.android.io2014.ui.AnimatedPathView
+                    android:id="@+id/star_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+
+                    io:duration="1000"
+                    io:fillColor="#ffffffff"
+                    io:fillDuration="500"
+                    io:fillOffset="400"
+                    io:phase="1.0"
+                    io:strokeColor="#ffffffff"
+                    io:strokeWidth="6dp"
+                    io:svgPath="@raw/star" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/info"
+                    style="@style/FloatingCard"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/floating_button_margin"
+                    android:layout_marginRight="@dimen/floating_button_margin">
+
+                    <ImageButton
+                        android:id="@+id/info_button"
+                        style="@style/FloatingButton"
+                        android:onClick="showInformation"
+                        android:src="@drawable/ic_info" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/star"
+                    style="@style/FloatingCard"
+                    android:layout_gravity="bottom|start"
+                    android:layout_marginLeft="@dimen/floating_button_margin"
+                    android:layout_marginStart="@dimen/floating_button_margin">
+
+                    <ImageButton
+                        android:id="@+id/star_button"
+                        style="@style/FloatingButton"
+                        android:onClick="showStar"
+                        android:src="@drawable/ic_star" />
+
+                </android.support.v7.widget.CardView>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="12dp"
+                android:lineSpacingMultiplier="1.2"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <com.makeramen.RoundedImageView
+            android:id="@+id/animated_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:tint="@color/photo_tint"
+            io:corner_radius="@dimen/card_corner_radius"/>
+
+    </FrameLayout>
+
+</ScrollView>

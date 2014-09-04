@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme_default_primary_light">#ffff598e</color>
+    <color name="theme_default_primary">#e91e63</color>
+    <color name="theme_default_primary_dark">#c2185b</color>
+    <color name="theme_default_accent">#8f673ab7</color>
+    <color name="theme_default_accent_light">#8f9575cd</color>
+    <color name="theme_default_accent_dark">#8f512da8</color>
+    <color name="theme_background">#f2f2f2</color>
+
+    <color name="photo_tint">#7f101010</color>
+
+    <color name="default_dark_muted">#44424f</color>
+    <color name="default_dark_vibrant">#7b400a</color>
+    <color name="default_vibrant">#f3aa66</color>
+    <color name="default_light_muted">#c9be9c</color>
+    <color name="default_light_vibrant">#fcda99</color>
+    <color name="default_muted">#7f7c8a</color>
+</resources>
