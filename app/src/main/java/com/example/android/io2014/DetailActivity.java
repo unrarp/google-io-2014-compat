@@ -249,13 +249,9 @@ public class DetailActivity extends ActionBarActivity {
 
     private void createScaleAnimation(final SpotlightView spotlight) {
         spotlight.setVisibility(View.VISIBLE);
+
         ObjectAnimator superScale = ObjectAnimator.ofFloat(spotlight, "maskScale", maskScale);
-
-        AnimatorSet set = new AnimatorSet();
-        set.play(superScale);
-        set.start();
-
-        set.addListener(new AnimatorListener() {
+        superScale.addListener(new AnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 hero.setVisibility(View.INVISIBLE);
@@ -272,12 +268,7 @@ public class DetailActivity extends ActionBarActivity {
         spotlight.setMaskScale(maskScale);
 
         ObjectAnimator superShrink = ObjectAnimator.ofFloat(spotlight, "maskScale", maskScale, 0.5f);
-
-        AnimatorSet set = new AnimatorSet();
-        set.play(superShrink);
-        set.start();
-
-        set.addListener(new AnimatorListener() {
+        superShrink.addListener(new AnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 spotlight.setVisibility(View.GONE);
