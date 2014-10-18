@@ -259,6 +259,7 @@ public class DetailActivity extends ActionBarActivity {
                 spotlight.setVisibility(View.GONE);
             }
         });
+        superScale.start();
     }
 
     private void createShrinkAnimation(final SpotlightView spotlight) {
@@ -274,6 +275,7 @@ public class DetailActivity extends ActionBarActivity {
                 spotlight.setVisibility(View.GONE);
             }
         });
+        superShrink.start();
     }
 
     /**
