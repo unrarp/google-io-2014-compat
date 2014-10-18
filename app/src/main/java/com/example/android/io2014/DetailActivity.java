@@ -16,12 +16,12 @@
 
 package com.example.android.io2014;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.graphics.PaletteItem;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -40,7 +40,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
@@ -164,25 +163,27 @@ public class DetailActivity extends ActionBarActivity {
     }
 
     private void applyPalette(Palette palette) {
-        container.setBackgroundColor(getColor(palette.getDarkMutedColor(), R.color.default_dark_muted));
+        Resources res = getResources();
+
+        container.setBackgroundColor(palette.getDarkMutedColor(res.getColor(R.color.default_dark_muted)));
 
         TextView titleView = (TextView) findViewById(R.id.title);
-        titleView.setTextColor(getColor(palette.getVibrantColor(), R.color.default_vibrant));
+        titleView.setTextColor(palette.getVibrantColor(res.getColor(R.color.default_vibrant)));
 
         TextView descriptionView = (TextView) findViewById(R.id.description);
-        descriptionView.setTextColor(getColor(palette.getLightVibrantColor(), R.color.default_light_vibrant));
+        descriptionView.setTextColor(palette.getLightVibrantColor(res.getColor(R.color.default_light_vibrant)));
 
-        colorButton(R.id.info_button, getColor(palette.getDarkMutedColor(), R.color.default_dark_muted),
-                getColor(palette.getDarkVibrantColor(), R.color.default_dark_vibrant));
-        colorButton(R.id.star_button, getColor(palette.getMutedColor(), R.color.default_muted),
-                getColor(palette.getVibrantColor(), R.color.default_vibrant));
+        colorButton(R.id.info_button, palette.getDarkMutedColor(res.getColor(R.color.default_dark_muted)),
+                palette.getDarkVibrantColor(res.getColor(R.color.default_dark_vibrant)));
+        colorButton(R.id.star_button, palette.getMutedColor(res.getColor(R.color.default_muted)),
+                palette.getVibrantColor(res.getColor(R.color.default_vibrant)));
 
-        mapContainer.setBackgroundColor(getColor(palette.getLightMutedColor(), R.color.default_light_muted));
-        spotlight.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        mapContainer.setBackgroundColor(palette.getLightMutedColor(R.color.default_light_muted));
+        spotlight.setBackgroundColor(res.getColor(android.R.color.transparent));
 
         AnimatedPathView star = (AnimatedPathView) findViewById(R.id.star_container);
-        star.setFillColor(getColor(palette.getVibrantColor(), R.color.default_vibrant));
-        star.setStrokeColor(getColor(palette.getLightVibrantColor(), R.color.default_light_vibrant));
+        star.setFillColor(palette.getVibrantColor(R.color.default_vibrant));
+        star.setStrokeColor(palette.getLightVibrantColor(res.getColor(R.color.default_light_vibrant)));
     }
 
     private void colorButton(int id, int bgColor, int tintColor) {
@@ -191,17 +192,6 @@ public class DetailActivity extends ActionBarActivity {
         // TODO Create a StateListDrawable and use the tintColor
         GradientDrawable bgShape = (GradientDrawable) buttonView.getBackground();
         bgShape.setColor(bgColor);
-    }
-
-    /**
-     * Helper function to help protect against palette items that are null
-     *
-     * @param item
-     * @param resId
-     * @return
-     */
-    private int getColor(PaletteItem item, int resId) {
-        return item == null ? getResources().getColor(resId) : item.getRgb();
     }
 
     private Bitmap setupPhoto(int resource) {
