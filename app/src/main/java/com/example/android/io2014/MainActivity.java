@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import com.example.android.io2014.ui.Utils;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -40,12 +39,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setHomeButtonEnabled(false);
-
-        // For translucency on KitKat
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(getResources().getColor(R.color.theme_default_primary_dark));
 
         // Used to get the dimensions of the image views to load scaled down bitmaps
         final View parent = findViewById(R.id.parent);
