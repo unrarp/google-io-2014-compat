@@ -32,7 +32,7 @@
         <item name="android:onClick">showPhoto</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:background">?selectableItemBackground</item>
     </style>
 
     <style name="FloatingCard">
