@@ -16,4 +16,8 @@
         <attr name="target" format="reference" />
         <attr name="mask" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="BaseAppTheme">
+        <attr name="actionBarIconColor" format="color" />
+    </declare-styleable>
 </resources>

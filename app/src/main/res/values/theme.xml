@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="BaseAppTheme">
-        <attr name="actionBarIconColor" format="color" />
-    </declare-styleable>
-
     <style name="BaseAppTheme" parent="@style/Theme.AppCompat.Light">
         <item name="colorPrimary">@color/theme_default_primary</item>
         <item name="colorPrimaryDark">@color/theme_default_primary_dark</item>
