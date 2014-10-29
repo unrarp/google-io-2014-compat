@@ -69,4 +69,12 @@ public class Utils {
             v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
         }
     }
+
+    /**
+     * Uses static final constants to detect if the device's platform version is Lollipop or
+     * later.
+     */
+    public static boolean hasLollipop() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
 }

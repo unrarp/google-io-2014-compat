@@ -20,9 +20,9 @@
             android:id="@+id/card_photo_1"
             style="@style/Card">
 
-            <com.makeramen.RoundedImageView
-                android:id="@+id/photo_1"
-                style="@style/CardPhoto" />
+            <include
+                layout="@layout/card_photo"
+                android:transitionName="photo1" />
 
             <TextView
                 android:id="@+id/show_photo_1"
@@ -35,9 +35,9 @@
             android:id="@+id/card_photo_2"
             style="@style/Card">
 
-            <com.makeramen.RoundedImageView
-                android:id="@+id/photo_2"
-                style="@style/CardPhoto" />
+            <include
+                layout="@layout/card_photo"
+                android:transitionName="photo2" />
 
             <TextView
                 android:id="@+id/show_photo_2"
@@ -50,9 +50,9 @@
             android:id="@+id/card_photo_3"
             style="@style/Card">
 
-            <com.makeramen.RoundedImageView
-                android:id="@+id/photo_3"
-                style="@style/CardPhoto" />
+            <include
+                layout="@layout/card_photo"
+                android:transitionName="photo3" />
 
             <TextView
                 android:id="@+id/show_photo_3"
@@ -65,9 +65,9 @@
             android:id="@+id/card_photo_4"
             style="@style/Card">
 
-            <com.makeramen.RoundedImageView
-                android:id="@+id/photo_4"
-                style="@style/CardPhoto" />
+            <include
+                layout="@layout/card_photo"
+                android:transitionName="photo4" />
 
             <TextView
                 android:id="@+id/show_photo_4"

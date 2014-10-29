@@ -16,12 +16,17 @@
 
 package com.example.android.io2014;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
@@ -46,10 +51,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onGlobalLayout() {
                 Utils.removeOnGlobalLayoutListener(parent, this);
-                setImageBitmap((ImageView) findViewById(R.id.photo_1), R.drawable.photo1);
-                setImageBitmap((ImageView) findViewById(R.id.photo_2), R.drawable.photo2);
-                setImageBitmap((ImageView) findViewById(R.id.photo_3), R.drawable.photo3);
-                setImageBitmap((ImageView) findViewById(R.id.photo_4), R.drawable.photo4);
+                setImageBitmap((ImageView) findViewById(R.id.card_photo_1).findViewById(R.id.photo), R.drawable.photo1);
+                setImageBitmap((ImageView) findViewById(R.id.card_photo_2).findViewById(R.id.photo), R.drawable.photo2);
+                setImageBitmap((ImageView) findViewById(R.id.card_photo_3).findViewById(R.id.photo), R.drawable.photo3);
+                setImageBitmap((ImageView) findViewById(R.id.card_photo_4).findViewById(R.id.photo), R.drawable.photo4);
             }
         });
 
@@ -58,12 +63,14 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // The activity transition animates the clicked image alpha to zero, reset that value when
-        // you come back to this activity
-        ViewHelper.setAlpha(findViewById(R.id.card_photo_1), 1.0f);
-        ViewHelper.setAlpha(findViewById(R.id.card_photo_2), 1.0f);
-        ViewHelper.setAlpha(findViewById(R.id.card_photo_3), 1.0f);
-        ViewHelper.setAlpha(findViewById(R.id.card_photo_4), 1.0f);
+        if (!Utils.hasLollipop()) {
+            // The activity transition animates the clicked image alpha to zero, reset that value when
+            // you come back to this activity
+            ViewHelper.setAlpha(findViewById(R.id.card_photo_1), 1.0f);
+            ViewHelper.setAlpha(findViewById(R.id.card_photo_2), 1.0f);
+            ViewHelper.setAlpha(findViewById(R.id.card_photo_3), 1.0f);
+            ViewHelper.setAlpha(findViewById(R.id.card_photo_4), 1.0f);
+        }
     }
 
     /**
@@ -131,6 +138,28 @@ public class MainActivity extends ActionBarActivity {
                 break;
         }
 
+        if (Utils.hasLollipop()) {
+            startActivityLollipop(view, intent);
+        } else {
+            startActivityGingerBread(view, intent, resId);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void startActivityLollipop(View view, Intent intent) {
+        intent.setClass(this, DetailActivityL.class);
+        ImageView hero = (ImageView) ((View) view.getParent()).findViewById(R.id.photo);
+        ((ViewGroup) hero.getParent()).setTransitionGroup(false);
+
+        sPhotoCache.put(intent.getIntExtra("photo", -1),
+                ((BitmapDrawable) hero.getDrawable()).getBitmap());
+
+        ActivityOptions options =
+                ActivityOptions.makeSceneTransitionAnimation(this, hero, "photo_hero");
+        startActivity(intent, options.toBundle());
+    }
+
+    private void startActivityGingerBread(View view, Intent intent, int resId) {
         int[] screenLocation = new int[2];
         view.getLocationOnScreen(screenLocation);
         intent.

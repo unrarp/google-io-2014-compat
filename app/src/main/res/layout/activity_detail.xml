@@ -135,7 +135,8 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:tint="@color/photo_tint"
-            io:corner_radius="@dimen/card_corner_radius"/>
+
+            io:riv_corner_radius="@dimen/card_corner_radius"/>
 
     </FrameLayout>
 

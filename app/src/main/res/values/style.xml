@@ -8,6 +8,7 @@
 
         <item name="cardBackgroundColor">@android:color/white</item>
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
     </style>
 
     <style name="CardPhoto">
@@ -16,7 +17,7 @@
         <item name="android:tint">@color/photo_tint</item>
         <item name="android:scaleType">centerCrop</item>
 
-        <item name="corner_radius">@dimen/card_corner_radius</item>
+        <item name="riv_corner_radius">@dimen/card_corner_radius</item>
     </style>
 
     <style name="CardTitle">
@@ -31,7 +32,7 @@
         <item name="android:onClick">showPhoto</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:background">@drawable/abc_item_background_holo_light</item>
+        <item name="android:background">?android:selectableItemBackground</item>
     </style>
 
     <style name="FloatingCard">

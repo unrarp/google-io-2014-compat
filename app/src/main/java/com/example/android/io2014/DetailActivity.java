@@ -16,35 +16,26 @@
 
 package com.example.android.io2014;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.graphics.Palette;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.android.io2014.ui.AnimatedPathView;
 import com.example.android.io2014.ui.AnimatorListener;
 import com.example.android.io2014.ui.SpotlightView;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.example.android.io2014.ui.Utils;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
-public class DetailActivity extends ActionBarActivity {
+public class DetailActivity extends AbstractDetailActivity {
 
     private static final Interpolator sDecelerator = new DecelerateInterpolator();
     private static final Interpolator sAccelerator = new AccelerateInterpolator();
@@ -55,138 +46,38 @@ public class DetailActivity extends ActionBarActivity {
     // Used for the circular reveal of the map. On entry, animatedHero is scaled and
     // translated to the correct position and then crossfades to hero which has no tint.
     // The exit animation runs all of this in reverse.
-    private ImageView hero, animatedHero;
+    private ImageView animatedHero;
 
-    private View mapContainer, infoContainer, container;
+    private View mapContainer, infoContainer;
     private float maskScale = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-
+    public void postCreate() {
         // Hide the back button until the entry animation is complete
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         spotlight = (SpotlightView) findViewById(R.id.spotlight);
         mapContainer = findViewById(R.id.map_container);
         infoContainer = findViewById(R.id.info_container);
-        container = findViewById(R.id.container);
-        hero = (ImageView) findViewById(R.id.photo);
+
         animatedHero = (ImageView) findViewById(R.id.animated_photo);
 
         // Setup the alpha values here for Gingerbread support
         ViewHelper.setAlpha(infoContainer, 0);
         ViewHelper.setAlpha(container, 0);
 
-        Bitmap heroImage = setupPhoto(getIntent().getIntExtra("photo", R.drawable.photo1));
-        colorize(heroImage);
-
-        setupMap();
-        setupText();
+        animatedHero.setImageBitmap(photo);
     }
 
     @Override
-    public void onBackPressed() {
-        ViewPropertyAnimator.animate(animatedHero).alpha(1);
-        ViewPropertyAnimator.animate(infoContainer).alpha(0).setListener(new AnimatorListener() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                runExitAnimation();
-            }
-        });
+    public void mapLoaded(Bitmap bitmap) {
+        mapContainer.setVisibility(View.INVISIBLE);
+        spotlight.createShaderB(bitmap);
+        maskScale = spotlight.computeMaskScale(Math.max(spotlight.getHeight(), spotlight.getWidth()) * 4.0f);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setupText() {
-        TextView titleView = (TextView) findViewById(R.id.title);
-        titleView.setText(getIntent().getStringExtra("title"));
-
-        TextView descriptionView = (TextView) findViewById(R.id.description);
-        descriptionView.setText(getIntent().getStringExtra("description"));
-    }
-
-    private void setupMap() {
-        final GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-
-        double lat = getIntent().getDoubleExtra("lat", 37.6329946);
-        double lng = getIntent().getDoubleExtra("lng", -122.4938344);
-        float zoom = getIntent().getFloatExtra("zoom", 15);
-
-        LatLng position = new LatLng(lat, lng);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoom));
-        map.addMarker(new MarkerOptions().position(position));
-
-        // We need the snapshot of the map to prepare the shader for the circular reveal.
-        // So the map is visible on activity start and then once the snapshot is taken, quickly hidden.
-        map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                map.snapshot(new GoogleMap.SnapshotReadyCallback() {
-                    @Override
-                    public void onSnapshotReady(Bitmap bitmap) {
-                        mapContainer.setVisibility(View.INVISIBLE);
-                        spotlight.createShaderB(bitmap);
-                        maskScale = spotlight.computeMaskScale(Math.max(spotlight.getHeight(), spotlight.getWidth()) * 4.0f);
-                    }
-                });
-            }
-        });
-
-        // This is basically a OnGlobalLayoutListener callback.
-        // The views have their dimensions at this point.
-        // At this point we can run the entry animation.
-        spotlight.setAnimationSetupCallback(new SpotlightView.AnimationSetupCallback() {
-            @Override
-            public void onSetupAnimation(SpotlightView spotlight) {
-                View button = findViewById(R.id.info);
-                spotlight.setMaskX(button.getRight() - (button.getWidth() / 2));
-                spotlight.setMaskY(button.getBottom() - (button.getHeight() / 2));
-
-                runEnterAnimation();
-            }
-        });
-    }
-
-    private void colorize(Bitmap photo) {
-        Palette palette = Palette.generate(photo);
-        applyPalette(palette);
-    }
-
-    private void applyPalette(Palette palette) {
-        Resources res = getResources();
-
-        container.setBackgroundColor(palette.getDarkMutedColor(res.getColor(R.color.default_dark_muted)));
-
-        TextView titleView = (TextView) findViewById(R.id.title);
-        titleView.setTextColor(palette.getVibrantColor(res.getColor(R.color.default_vibrant)));
-
-        TextView descriptionView = (TextView) findViewById(R.id.description);
-        descriptionView.setTextColor(palette.getLightVibrantColor(res.getColor(R.color.default_light_vibrant)));
-
-        colorButton(R.id.info_button, palette.getDarkMutedColor(res.getColor(R.color.default_dark_muted)),
-                palette.getDarkVibrantColor(res.getColor(R.color.default_dark_vibrant)));
-        colorButton(R.id.star_button, palette.getMutedColor(res.getColor(R.color.default_muted)),
-                palette.getVibrantColor(res.getColor(R.color.default_vibrant)));
-
-        mapContainer.setBackgroundColor(palette.getLightMutedColor(R.color.default_light_muted));
-        spotlight.setBackgroundColor(res.getColor(android.R.color.transparent));
-
-        AnimatedPathView star = (AnimatedPathView) findViewById(R.id.star_container);
-        star.setFillColor(palette.getVibrantColor(R.color.default_vibrant));
-        star.setStrokeColor(palette.getLightVibrantColor(res.getColor(R.color.default_light_vibrant)));
-    }
-
-    private void colorButton(int id, int bgColor, int tintColor) {
+    public void colorButton(int id, int bgColor, int tintColor) {
         ImageButton buttonView = (ImageButton) findViewById(id);
 
         // TODO Create a StateListDrawable and use the tintColor
@@ -201,35 +92,7 @@ public class DetailActivity extends ActionBarActivity {
         return bitmap;
     }
 
-    public void showStar(View view) {
-        toggleStarView();
-    }
-
-    private void toggleStarView() {
-        final AnimatedPathView starContainer = (AnimatedPathView) findViewById(R.id.star_container);
-
-        if (starContainer.getVisibility() == View.INVISIBLE) {
-            ViewPropertyAnimator.animate(hero).alpha(0.2f);
-            ViewPropertyAnimator.animate(starContainer).alpha(1);
-            starContainer.setVisibility(View.VISIBLE);
-            starContainer.reveal();
-        } else {
-            ViewPropertyAnimator.animate(hero).alpha(1);
-            ViewPropertyAnimator.animate(starContainer).alpha(0).setListener(new AnimatorListener() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    starContainer.setVisibility(View.INVISIBLE);
-                    ViewPropertyAnimator.animate(starContainer).setListener(null);
-                }
-            });
-        }
-    }
-
-    public void showInformation(View view) {
-        toggleInformationView(view);
-    }
-
-    private void toggleInformationView(View view) {
+    public void toggleInformationView(View view) {
         if (mapContainer.getVisibility() == View.INVISIBLE) {
             createScaleAnimation(spotlight);
         } else {
@@ -266,6 +129,23 @@ public class DetailActivity extends ActionBarActivity {
             }
         });
         superShrink.start();
+    }
+
+    @Override
+    public void setupEnterAnimation() {
+        spotlight.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                View button = findViewById(R.id.info);
+                spotlight.setMaskX(button.getRight() - (button.getWidth() / 2));
+                spotlight.setMaskY(button.getBottom() - (button.getHeight() / 2));
+
+                runEnterAnimation();
+
+                Utils.removeOnGlobalLayoutListener(spotlight, this);
+            }
+        });
     }
 
     /**
@@ -313,6 +193,17 @@ public class DetailActivity extends ActionBarActivity {
                 });
         // Animate in the container with the background and text
         ViewPropertyAnimator.animate(container).alpha(1);
+    }
+
+    @Override
+    public void setupExitAnimation() {
+        ViewPropertyAnimator.animate(animatedHero).alpha(1);
+        ViewPropertyAnimator.animate(infoContainer).alpha(0).setListener(new AnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                runExitAnimation();
+            }
+        });
     }
 
     /**

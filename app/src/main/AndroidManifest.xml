@@ -41,8 +41,13 @@
             android:parentActivityName=".MainActivity"
             android:name=".DetailActivity"
             android:theme="@style/DetailTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:parentActivityName=".MainActivity"
+            android:name=".DetailActivityL"
+            android:theme="@style/DetailTheme"
+            android:screenOrientation="portrait" />
 
     </application>
 
