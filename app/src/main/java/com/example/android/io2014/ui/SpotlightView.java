@@ -117,7 +117,7 @@ public class SpotlightView extends View {
                     mCallback.onSetupAnimation(SpotlightView.this);
                 }
 
-                Utils.removeOnGlobalLayoutListener(SpotlightView.this, this);
+                Utils.removeOnGlobalLayoutListenerCompat(SpotlightView.this, this);
             }
         });
     }

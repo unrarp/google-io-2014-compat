@@ -42,12 +42,13 @@
 
         <item name="cardBackgroundColor">@android:color/transparent</item>
         <item name="cardCornerRadius">@dimen/floating_button_card_radius</item>
+        <item name="cardElevation">@dimen/button_elevation</item>
+        <item name="cardPreventCornerOverlap">false</item>
     </style>
 
     <style name="FloatingButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@drawable/info_background</item>
     </style>
 
 </resources>

@@ -17,7 +17,11 @@
 package com.example.android.io2014;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -80,9 +84,14 @@ public class DetailActivity extends AbstractDetailActivity {
     public void colorButton(int id, int bgColor, int tintColor) {
         ImageButton buttonView = (ImageButton) findViewById(id);
 
-        // TODO Create a StateListDrawable and use the tintColor
-        GradientDrawable bgShape = (GradientDrawable) buttonView.getBackground();
-        bgShape.setColor(bgColor);
+        StateListDrawable bg = new StateListDrawable();
+        ShapeDrawable normal = new ShapeDrawable(new OvalShape());
+        normal.getPaint().setColor(bgColor);
+        ShapeDrawable pressed = new ShapeDrawable(new OvalShape());
+        pressed.getPaint().setColor(tintColor);
+        bg.addState(new int[] {android.R.attr.state_pressed}, pressed);
+        bg.addState(new int[]{}, normal);
+        Utils.setBackgroundCompat(buttonView, bg);
     }
 
     private Bitmap setupPhoto(int resource) {
@@ -143,7 +152,7 @@ public class DetailActivity extends AbstractDetailActivity {
 
                 runEnterAnimation();
 
-                Utils.removeOnGlobalLayoutListener(spotlight, this);
+                Utils.removeOnGlobalLayoutListenerCompat(spotlight, this);
             }
         });
     }
