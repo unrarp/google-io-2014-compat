@@ -7,27 +7,17 @@ The original Material Witness is a sample application for the new Material Desig
 
 * Dynamic palette using the palette support library
 * Circular reveal using the blog post by [Romain Guy][1] using [bitmap shaders][4]
-* Activity transitions using the DevByte from [Chet Haase][11] on [custom activity animations][3]
+* Activity transitions using the DevByte from [Chet Haase][10] on [custom activity animations][3]
 * Path tracing using the blog post by [Romain Guy][1] using [path effects][5] 
 
 Features that couldn't be backported include:
 
 * Custom theme colors. Whatever is allowed by the the v7 appcompat library has been implemented
-* Colored status and navigation bars. KitKat devices use the translucency mode using the [SystemBarTint][10] library by [Jeff Gilfelt][12]
 * Ripple drawables
 
 The complete video of the Google I/O 2014 talk detailing how the original application works can be found on [YouTube][2].
 
 ![Material Witness](art/MaterialWitness.png)
-
-Pre-Android "L" Note
-===================
-
-While Android "L" is in preview, the support library associated with CardView & Palette has its minimum SDK version set to L (v21). At least for the time being, in order to use these samples on an earlier Android device (they work back to v7), add the following line to your AndroidManifest.xml file (under the `<manifest>` element:
-
-    <uses-sdk tools:node="replace" />
-
-This will cause Gradle to ignore the updated SDK version in the library.
 
 Demo
 ====
@@ -77,9 +67,7 @@ __android-support-v7-cardview__ is subject to the [Apache License, Version 2.0][
 
 __nineoldandroids-2.4.0__ is subject to the [Apache License, Version 2.0][6]. More information on [the official web site][8].
 
-__roundedimageview-1.3.0__ is subject to the [Apache License, Version 2.0][6]. More information on [the official web site][9].
-
-__systembartint-1.0.3__ is subject to the [Apache License, Version 2.0][6]. More information on [the official web site][10].
+__roundedimageview-1.4.0__ is subject to the [Apache License, Version 2.0][6]. More information on [the official web site][9].
 
 [1]: http://www.curious-creature.org
 [2]: https://www.youtube.com/watch?v=97SWYiRtF0Y
@@ -90,6 +78,4 @@ __systembartint-1.0.3__ is subject to the [Apache License, Version 2.0][6]. More
 [7]: https://code.google.com/p/androidsvg
 [8]: http://nineoldandroids.com
 [9]: https://github.com/vinc3m1/RoundedImageView
-[10]: https://github.com/jgilfelt/SystemBarTint
-[11]: http://graphics-geek.blogspot.sg
-[12]: http://www.jeffgilfelt.com
+[10]: http://graphics-geek.blogspot.sg
