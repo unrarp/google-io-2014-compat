@@ -2,7 +2,7 @@ package com.example.android.io2014;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
+import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
@@ -105,8 +105,9 @@ public class DetailActivityL extends AbstractDetailActivity {
             @Override
             public void onTransitionEnd(Transition transition) {
                 ImageView hero = (ImageView) findViewById(R.id.photo);
-                ObjectAnimator color = ObjectAnimator.ofArgb(hero.getColorFilter(), "color", 0);
-                color.addUpdateListener(new ColorFilterListener(hero));
+                Integer colorFrom = getResources().getColor(R.color.photo_tint);
+                ValueAnimator color = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, 0);
+                color.addUpdateListener(new TintListener(hero));
                 color.start();
 
                 findViewById(R.id.info_button).animate().alpha(1.0f);
@@ -119,9 +120,9 @@ public class DetailActivityL extends AbstractDetailActivity {
 
     @Override
     public void setupExitAnimation() {
-        ObjectAnimator color = ObjectAnimator.ofArgb(hero.getColorFilter(), "color",
-                getResources().getColor(R.color.photo_tint));
-        color.addUpdateListener(new ColorFilterListener(hero));
+        Integer colorTo = getResources().getColor(R.color.photo_tint);
+        ValueAnimator color = ValueAnimator.ofObject(new ArgbEvaluator(), 0, colorTo);
+        color.addUpdateListener(new TintListener(hero));
         color.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -134,16 +135,16 @@ public class DetailActivityL extends AbstractDetailActivity {
         findViewById(R.id.star_button).animate().alpha(0.0f);
     }
 
-    private static class ColorFilterListener implements ValueAnimator.AnimatorUpdateListener {
+    private static class TintListener implements ValueAnimator.AnimatorUpdateListener {
         private final ImageView mHero;
 
-        ColorFilterListener(ImageView hero) {
+        TintListener(ImageView hero) {
             mHero = hero;
         }
 
         @Override
         public void onAnimationUpdate(ValueAnimator valueAnimator) {
-            mHero.getDrawable().setColorFilter(mHero.getColorFilter());
+            mHero.getDrawable().setTint((Integer) valueAnimator.getAnimatedValue());
         }
     }
 }
