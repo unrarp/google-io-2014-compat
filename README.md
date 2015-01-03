@@ -35,6 +35,8 @@ How to use this source code
 
 The google-io-2014-compat project can be opened in Android Studio. It contains a single module called **app** in the `app/` folder.
 
+Replace YOUR_KEY_HERE in `app/src/main/AndroidManifest.xml` with a valid Google Maps Android API v2 API KEY.  
+
 The project can be compiled from the command line using Gradle.
 
 The actual source code and resources can be found in `app/src/main/`. The only dependencies are in `app/lib/`.
