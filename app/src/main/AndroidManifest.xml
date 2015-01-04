@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.io2014" >
 
     <uses-feature
@@ -25,7 +24,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="YOUR_KEY_HERE"/>
+            android:value="AIzaSyDrT1Qgc_LB5kwfZ7ZoGFDHaMKAHRa464Q"/>
 
         <activity
             android:name=".MainActivity"
